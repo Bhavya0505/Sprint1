@@ -9,27 +9,41 @@ import com.surveybuilder.dao.answerDao;
 import com.surveybuilder.entity.Answer;
 import com.surveybuilder.exception.ResourceNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Service
 public class AnswerServiceImpl implements AnswerService{
 
+	public static final Logger logger = LoggerFactory.getLogger(AnswerServiceImpl.class);
+
+	
 	@Autowired
 	answerDao ad;
 	
+	//createAnswerService
 	@Override
 	public Answer createAnswerService(Answer s) {
-		// TODO Auto-generated method stub
+
+		logger.info("createAnswerService");
 		return ad.save(s);
 	}
 
+	//viewAnswerByIdService
 	@Override
 	public Answer viewAnswerByIdService(long id) {
-		// TODO Auto-generated method stub
+
+		logger.info("viewAnswerByIdService");
 		return ad.findAnswerById(id);
 	}
 
+	//updateAnswerService
 	@Override
 	public Answer updateAnswerService(Answer s, long id) throws ResourceNotFoundException {
-	Answer a = ad.findById(id).orElseThrow(() -> new ResourceNotFoundException("Answer not found for this id :: " + id));
+	
+		logger.info("updateAnswerService");
+		Answer a = ad.findById(id).orElseThrow(() -> new ResourceNotFoundException("Answer not found for this id :: " + id));
 		
 		s.setAid(a.getAid());
 		
@@ -37,8 +51,10 @@ public class AnswerServiceImpl implements AnswerService{
 		return updatedA;
 	}
 
+	//deleteAnswerByIdService
 	@Override
 	public boolean deleteAnswerByIdService(long id) throws ResourceNotFoundException {
+		logger.info("deleteAnswerByIdService");
 		Answer a = ad.findById(id).orElseThrow(() -> new ResourceNotFoundException("Answer not found for this id :: " + id));
 		
 		ad.deleteById(id);
@@ -50,9 +66,11 @@ public class AnswerServiceImpl implements AnswerService{
 	}
 	
 
+	//listAllAnswerService
 	@Override
 	public List<Answer> listAllAnswerService() {
-		// TODO Auto-generated method stub
+
+		logger.info("listAllAnswerService");
 		return ad.findAll();
 	}
 

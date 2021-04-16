@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import com.surveybuilder.dao.RespondentDao;
 import com.surveybuilder.entity.Respondent;
 import com.surveybuilder.exception.ResourceNotFoundException;
@@ -12,12 +16,16 @@ import com.surveybuilder.exception.ResourceNotFoundException;
 @Service
 public class RespondentServiceImpl implements RespondentService{
 
+	public static final Logger logger = LoggerFactory.getLogger(RespondentServiceImpl.class);
+
+	
 	@Autowired
 	RespondentDao rr;
 
+	//createRespondentService
 	@Override
 	public Respondent createRespondentService(Respondent s) {
-		
+		logger.info("createRespondentService");
 		Respondent a = rr.save(s);
 		if(a == null) {
 			 new ResourceNotFoundException("Can not create Respondent :: ");
@@ -26,8 +34,10 @@ public class RespondentServiceImpl implements RespondentService{
 		return a ;
 	}
 
+	//viewRespondentByIdService
 	@Override
 	public Respondent viewRespondentByIdService(long id) {
+		logger.info("viewRespondentByIdService");
 	Respondent a = rr.findRespondentById(id);
 		
 		if(a == null) {
@@ -36,9 +46,12 @@ public class RespondentServiceImpl implements RespondentService{
 		return a;
 	}
 
+	//updateRespondentService
 	@Override
 	public Respondent updateRespondentService(Respondent s, long id) throws ResourceNotFoundException {
-Respondent a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Respondent not found for this id :: " + id));
+
+		logger.info("updateRespondentService");
+		Respondent a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Respondent not found for this id :: " + id));
 		
 		s.setRespondentId(a.getRespondentId());
 		
@@ -46,9 +59,13 @@ Respondent a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("
 		return updatedA;
 	}
 
+	//deleteRespondentByIdService
 	@Override
 	public boolean deleteRespondentByIdService(long id) throws ResourceNotFoundException {
-	Respondent a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Respondent not found for this id :: " + id));
+	
+		logger.info("deleteRespondentByIdService");
+		
+		Respondent a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Respondent not found for this id :: " + id));
 		
 		rr.deleteById(id);
 		
@@ -58,15 +75,17 @@ Respondent a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("
 			return true;
 	}
 
+	//listAllRespondentService
 	@Override
 	public List<Respondent> listAllRespondentService() {
-		// TODO Auto-generated method stub
+		logger.info("get listof all respondent service");
 		return rr.findAll();
 	}
 
+	//auth respondent
 	@Override
 	public Respondent authRespondent(String emailId, String pass) {
-		// TODO Auto-generated method stub
+		logger.info("authentication of respondent");
 		return rr.authRespondent(emailId, pass);
 	}
 	

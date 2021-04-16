@@ -10,15 +10,24 @@ import com.surveybuilder.dao.surveyorDao;
 import com.surveybuilder.entity.Surveyor;
 import com.surveybuilder.exception.ResourceNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Service
 public class surveyorServiceImpl implements surveyorService{
 
+	public static final Logger logger = LoggerFactory.getLogger(surveyorServiceImpl.class);
+
+	
 	@Autowired
 	surveyorDao sd;
 
+	//createSurveyorService
 	@Override
 	public Surveyor createSurveyorService(Surveyor s) {
-	Surveyor a = sd.save(s);
+	logger.info("createSurveyorService");
+		Surveyor a = sd.save(s);
 		
 		if(a == null) {
 			 new ResourceNotFoundException("Can not create surveyor profile :: ");
@@ -27,17 +36,21 @@ public class surveyorServiceImpl implements surveyorService{
 		return a ;
 	}
 
+	//viewSurveyorByIdService
 	@Override
 	public Surveyor viewSurveyorByIdService(long id) {
-		// TODO Auto-generated method stub
+
+		logger.info("viewSurveyorByIdService");
 		Optional<Surveyor> s= sd.findById(id);
 		return s.get();
 	}
 
+	//updateSurveyorService
 	@Override
 	public Surveyor updateSurveyorService(Surveyor s, long id) throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
-	Surveyor a = sd.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
+
+		logger.info("updateSurveyorService");
+		Surveyor a = sd.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
 		
 		s.setSurveyorId(a.getSurveyorId());
 		
@@ -46,9 +59,11 @@ public class surveyorServiceImpl implements surveyorService{
 	
 	}
 
+	//deleteSurveyorByIdService
 	@Override
 	public boolean deleteSurveyorByIdService(long id) throws ResourceNotFoundException {
 
+		logger.info("deleteSurveyorByIdService");
 		Surveyor a = sd.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
 		
 		sd.deleteById(id);
@@ -60,15 +75,18 @@ public class surveyorServiceImpl implements surveyorService{
 		
 	}
 
+	//listAllSurveyorService
 	@Override
 	public List<Surveyor> listAllSurveyorService() {
-		// TODO Auto-generated method stub
+		logger.info("listAllSurveyorService");
 		return sd.findAll();
 	}
 
+	//authSurveyorService
 	@Override
 	public Surveyor authSurveyor(String emailId, String pass) {
-		// TODO Auto-generated method stub
+
+		logger.info("authSurevyorService");
 		return sd.authSurveyor(emailId, pass);
 	}
 	

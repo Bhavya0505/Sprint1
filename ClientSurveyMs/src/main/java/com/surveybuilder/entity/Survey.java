@@ -33,7 +33,7 @@ public class Survey {
 	private String status;
 
 	@JsonManagedReference
-	@OneToMany(targetEntity = Question.class,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Question.class,cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     @JoinColumn(name ="Survey_fk",referencedColumnName = "sid")
     private List<Question> question;
 
@@ -42,32 +42,17 @@ public class Survey {
 	@JoinColumn(name = "surveyor_fk")
 	private Surveyor surveyor;
 	
-	 @ManyToMany(fetch = FetchType.LAZY)
-	 @JoinTable(name = "Survey_Respondent", 
-	 joinColumns = { @JoinColumn(name = "sId") }, 
-	 inverseJoinColumns = { @JoinColumn(name = "respondentId") })
-	 private List<Respondent> respondent = new ArrayList<Respondent>();
-	 
+
 	
 
 
-	public Survey(long sid, String title, String status, List<Question> question, Surveyor surveyor,
-			List<com.surveybuilder.entity.Respondent> respondent) {
+	public Survey(long sid, String title, String status, List<Question> question, Surveyor surveyor) {
 		super();
 		this.sid = sid;
 		this.title = title;
 		this.status = status;
 		this.question = question;
 		this.surveyor = surveyor;
-		this.respondent = respondent;
-	}
-
-	public List<Respondent> getRespondent() {
-		return respondent;
-	}
-
-	public void setRespondent(List<Respondent> respondent) {
-		this.respondent = respondent;
 	}
 
 	public List<Question> getQuestion() {
@@ -105,7 +90,7 @@ public class Survey {
 	@Override
 	public String toString() {
 		return "Survey [sid=" + sid + ", title=" + title + ", status=" + status + ", question=" + question
-				+ ", surveyor=" + surveyor + ", respondent=" + respondent + "]";
+				+ ", surveyor=" + surveyor + "]";
 	}
 
 
@@ -121,7 +106,6 @@ public class Survey {
 
 	public Survey() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 

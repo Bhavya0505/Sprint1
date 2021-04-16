@@ -26,7 +26,7 @@ public class Surveyor {
 	private String password;
 	
 	@JsonManagedReference
-	@OneToMany(targetEntity = Survey.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Survey.class, cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
 	@JoinColumn(name ="surveyor_fk",referencedColumnName = "surveyorId")
 	private List<Survey> survey;
 

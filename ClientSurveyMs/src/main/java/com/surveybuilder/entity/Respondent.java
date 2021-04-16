@@ -31,30 +31,18 @@ public class Respondent {
 	@Size(min = 4, max = 20, message = "Password must be between 4 and 20 characters")
 	private String password;
 	
-	@ManyToMany(mappedBy="respondent",cascade = CascadeType.ALL,fetch = FetchType.LAZY, targetEntity = Survey.class)
-	private List<Survey> surveys = new ArrayList<Survey>();
-	 
+
 	
 
 	public Respondent(long respondentId,
 			@Size(min = 1, max = 20, message = "Name must be between 1 and 20 characters") String name,
 			@Email(message = "Email should be valid") String emailId,
-			@Size(min = 4, max = 20, message = "Password must be between 4 and 20 characters") String password,
-			List<com.surveybuilder.entity.Survey> surveys) {
+			@Size(min = 4, max = 20, message = "Password must be between 4 and 20 characters") String password) {
 		super();
 		this.respondentId = respondentId;
 		this.name = name;
 		this.emailId = emailId;
 		this.password = password;
-		this.surveys = surveys;
-	}
-
-	public List<Survey> getSurveys() {
-		return surveys;
-	}
-
-	public void setSurveys(List<Survey> surveys) {
-		this.surveys = surveys;
 	}
 
 	public long getRespondentId() {
@@ -94,14 +82,13 @@ public class Respondent {
 	@Override
 	public String toString() {
 		return "Respondent [respondentId=" + respondentId + ", name=" + name + ", emailId=" + emailId + ", password="
-				+ password + ", surveys=" + surveys + "]";
+				+ password + "]";
 	}
 
 
 
 	public Respondent() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	 
 	

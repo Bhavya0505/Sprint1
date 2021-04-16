@@ -17,26 +17,40 @@ import com.surveybuilder.entity.Survey;
 import com.surveybuilder.exception.ResourceNotFoundException;
 import com.surveybuilder.service.AnswerService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
 @RequestMapping("/answer")
 public class AnswerController {
+	
+	public static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
+
+	
 	@Autowired
 	AnswerService as;
 	
+	
+	//getAllAnswers controller
 	@GetMapping("/Allanswer")
 	public List<Answer> getAllAnswerController(){
-		
+		logger.info("getAllAnswers Controller");
 		return as.listAllAnswerService();
 	}
 	
+	//createAnswerController
 	@PostMapping("/createAnswer")
 	public Answer createAnswerController(@RequestBody Answer a) {
-		return as.createAnswerService(a)
-				;	
+		logger.info("createAnswerController");
+		return as.createAnswerService(a);	
 	}
 
+	//viewAnswerByIdController
 	@GetMapping("viewAnswerById/{id}")
 	public Answer viewAnswerByIdController(@PathVariable("id") Long id){
+		
+		logger.info("viewAnswerByIdController");
+		
 		Answer a = as.viewAnswerByIdService(id);
 		Answer a1 = new Answer();
 		a1.setAid(a.getAid());
@@ -44,13 +58,17 @@ public class AnswerController {
 		return a1;
 	}
 	
+	//updateAnswerController
 	@PutMapping("updateAnswer/{id}")
 	public Answer updateAnswerController(@RequestBody Answer s, @PathVariable("id") long id) throws ResourceNotFoundException {
+		logger.info("updateAnswerController");
 		return as.updateAnswerService(s, id);
 	}
 	
+	//deleteAnswerByIdController
 	@DeleteMapping("deleteAnswerById/{id}")
 	public String deleteAnswerByIdController(@PathVariable("id") Long id) throws ResourceNotFoundException{
+		logger.info("deleteAnswerByIdController");
 		if(as.deleteAnswerByIdService(id))
 			return "Record deleted Successfully";
 		else

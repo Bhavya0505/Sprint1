@@ -33,7 +33,7 @@ public class Respondent {
 	@Size(min = 4, max = 20, message = "Password must be between 4 and 20 characters")
 	private String password;
 	
-
+//getters and setters
 	public long getRespondentId() {
 		return respondentId;
 	}
@@ -67,14 +67,14 @@ public class Respondent {
 	}
 
 
-
+//toString
 	@Override
 	public String toString() {
 		return "Respondent [respondentId=" + respondentId + ", name=" + name + ", emailId=" + emailId + ", password="
 				+ password + "]";
 	}
 
-
+//param constructor
 
 	public Respondent(long respondentId,
 			@Size(min = 1, max = 20, message = "Name must be between 1 and 20 characters") String name,
@@ -87,6 +87,7 @@ public class Respondent {
 		this.password = password;
 	}
 
+	//default constructor
 	public Respondent() {
 		super();
 		// TODO Auto-generated constructor stub

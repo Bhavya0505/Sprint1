@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,7 +29,7 @@ public class Question {
 	private String option4;
 	
 	@JsonManagedReference
-	@OneToMany(targetEntity = Answer.class,cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Answer.class,cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
     @JoinColumn(name ="Que_fk",referencedColumnName = "Qid")
     private List<Answer> answer;
 
