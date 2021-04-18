@@ -1,5 +1,6 @@
 package com.surveybuilder.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="questionms")
-public class Question {
+public class Question implements Serializable{
 	
 	
 	@Id

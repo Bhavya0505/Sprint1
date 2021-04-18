@@ -45,6 +45,18 @@ class AdminServiceTest {
 	void tearDown() throws Exception {
 	}
 
+	private Admin getAdmin() {
+		Admin a = new Admin();
+		
+		a.setAdminId(101);
+		a.setEmailId("abc");
+		a.setName("abc");
+		a.setPassword("abc");
+		
+		return a;
+	}
+
+	
 	@Test
 	void testCreateAdminController() throws Exception {
 		Admin admin = getAdmin();
@@ -74,7 +86,6 @@ class AdminServiceTest {
 	void testUpdateAdminController() throws Exception {
 		
 		Optional<Admin> a = Optional.of(getAdmin());
-		
 		
 		Admin admin = getAdmin();
 	  
@@ -117,16 +128,6 @@ class AdminServiceTest {
 	}
 	
 	
-	private Admin getAdmin() {
-		Admin a = new Admin();
-		
-		a.setAdminId(101);
-		a.setEmailId("abc");
-		a.setName("abc");
-		a.setPassword("abc");
-		
-		return a;
-	}
 
 
 }

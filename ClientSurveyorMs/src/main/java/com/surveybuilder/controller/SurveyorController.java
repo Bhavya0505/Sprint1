@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.surveybuilder.entity.Surveyor;
 import com.surveybuilder.exception.ResourceNotFoundException;
@@ -31,6 +33,10 @@ public class SurveyorController {
 	
 	@Autowired
 	surveyorService ss;
+	
+	@Autowired
+	RestTemplate rest;	
+	
 	
 	//print all surveyor
 	@GetMapping("/AllSurveyor")
@@ -83,6 +89,21 @@ public class SurveyorController {
 		else
 			return "Can not delete record";	
 	}
+	
+//get all survey using resttemplate
+	@GetMapping(value = "/viewallsurveys")
+	public ResponseEntity<String> viewAllSurvey() {
+		logger.info("get all surveys from surveyor controller");
+		String survey = rest.getForObject("http://localhost/survey/survey/AllSurvey", String.class);
+		return ResponseEntity.ok(survey);
+	}
 
+	//get all answers using RestTemplate
+		@GetMapping(value = "/viewallanswer")
+		public ResponseEntity<String> viewAllAnswers() {
+			logger.info("get all answers from surveyor controller");
+			String survey = rest.getForObject("http://localhost/survey/answer/Allanswer", String.class);
+			return ResponseEntity.ok(survey);
+		}
 	
 }

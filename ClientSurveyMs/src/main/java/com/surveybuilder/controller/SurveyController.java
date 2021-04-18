@@ -1,5 +1,6 @@
 package com.surveybuilder.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,5 +83,22 @@ public class SurveyController {
 	public Survey startSurveyController(@PathVariable("id") Long id) throws ResourceNotFoundException {
 		logger.info("start distribution of survey");
 		return ss.distributeSurvey(id);
+	}
+	
+	@GetMapping("viewallsurveystatus")
+	public List<Survey> viewOnlyAllSurveyController(){
+		List<Survey> lst = new ArrayList<Survey>();
+		
+		for(Survey s : ss.listAllSurveyService()) {
+			Survey s1 = new Survey();
+			
+			s1.setSid(s.getSid());
+			s1.setTitle(s.getTitle());
+			s1.setStatus(s.getStatus());
+
+			lst.add(s1);
+		}
+		
+		return lst;
 	}
 }

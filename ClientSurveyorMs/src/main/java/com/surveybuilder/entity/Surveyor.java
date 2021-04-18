@@ -1,5 +1,7 @@
 package com.surveybuilder.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,7 +11,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "surveyorms")
-public class Surveyor {
+public class Surveyor implements Serializable{
 	
 	@Id
 	private long surveyorId;

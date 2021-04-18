@@ -1,5 +1,6 @@
 package com.surveybuilder.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import com.surveybuilder.entity.*;
 
 @Entity
 @Table(name = "surveyms")
-public class Survey {
+public class Survey implements Serializable{
 
 	@Id
 	private long sid;

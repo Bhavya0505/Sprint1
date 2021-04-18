@@ -75,4 +75,10 @@ public class AnswerController {
 			return "Can not delete record";
 	}
 
+	//@PostMapping
+	//public String addAnswer(@RequestBody Answer answer) {
+		//return service.addFlight(flight);
+		//	}
+
+	
 }
