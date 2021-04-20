@@ -1,5 +1,7 @@
 package com.surveybuilder.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="answerms")
-public class Answer {
+public class Answer implements Serializable{
 	@Id
 	private long aid;
 	String ans;

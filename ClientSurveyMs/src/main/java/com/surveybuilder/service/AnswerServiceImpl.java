@@ -9,27 +9,66 @@ import com.surveybuilder.dao.answerDao;
 import com.surveybuilder.entity.Answer;
 import com.surveybuilder.exception.ResourceNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Service
 public class AnswerServiceImpl implements AnswerService{
 
+	public static final Logger logger = LoggerFactory.getLogger(AnswerServiceImpl.class);
+
+	
 	@Autowired
 	answerDao ad;
 	
+	
+	/****************************************************************************************************************************
+	 - Method Name      : createAnswerService
+	 - Input Parameters :Answer s
+	 - Return type      : Answer
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : create the Answer information entered by respondent and store into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public Answer createAnswerService(Answer s) {
-		// TODO Auto-generated method stub
+
+		logger.info("createAnswerService");
 		return ad.save(s);
 	}
 
+	/****************************************************************************************************************************
+	 - Method Name      : viewAnswerByIdService
+	 - Input Parameters :long id
+	 - Return type      : Answer
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : view all the answers stored in the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public Answer viewAnswerByIdService(long id) {
-		// TODO Auto-generated method stub
+
+		logger.info("viewAnswerByIdService");
 		return ad.findAnswerById(id);
 	}
 
+	/****************************************************************************************************************************
+	 - Method Name      : updateAnswerService
+	 - Input Parameters :Answer s, long id
+	 - Return type      : Answer
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : update the answer information entered by respondent and store into  the database.
+	  ****************************************************************************************************************************/ 
+
 	@Override
 	public Answer updateAnswerService(Answer s, long id) throws ResourceNotFoundException {
-	Answer a = ad.findById(id).orElseThrow(() -> new ResourceNotFoundException("Answer not found for this id :: " + id));
+	
+		logger.info("updateAnswerService");
+		Answer a = ad.findById(id).orElseThrow(() -> new ResourceNotFoundException("Answer not found for this id :: " + id));
 		
 		s.setAid(a.getAid());
 		
@@ -37,8 +76,18 @@ public class AnswerServiceImpl implements AnswerService{
 		return updatedA;
 	}
 
+	/****************************************************************************************************************************
+	 - Method Name      : deleteAnswerByIdService
+	 - Input Parameters : long id
+	 - Return type      : boolean
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : delete the answer information entered by respondent from the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public boolean deleteAnswerByIdService(long id) throws ResourceNotFoundException {
+		logger.info("deleteAnswerByIdService");
 		Answer a = ad.findById(id).orElseThrow(() -> new ResourceNotFoundException("Answer not found for this id :: " + id));
 		
 		ad.deleteById(id);
@@ -50,9 +99,19 @@ public class AnswerServiceImpl implements AnswerService{
 	}
 	
 
+	/****************************************************************************************************************************
+	 - Method Name      : listAllAnswerService
+	 - Input Parameters :
+	 - Return type      : List<Answer>
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : view all the answers from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public List<Answer> listAllAnswerService() {
-		// TODO Auto-generated method stub
+
+		logger.info("listAllAnswerService");
 		return ad.findAll();
 	}
 

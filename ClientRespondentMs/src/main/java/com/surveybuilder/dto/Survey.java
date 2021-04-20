@@ -1,8 +1,10 @@
 package com.surveybuilder.dto;
 
+import java.io.Serializable;
+
 import javax.persistence.Id;
 
-public class Survey {
+public class Survey implements Serializable{
 
 	
 	private long sid;

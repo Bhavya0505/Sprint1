@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,23 +17,33 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.surveybuilder.entity.*;
 import com.surveybuilder.exception.ResourceNotFoundException;
 import com.surveybuilder.service.AdminService;
 
+import io.swagger.annotations.Api;
+
+@Api(description =  "Rest API of Admin Controller")
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
-	
+	public static final Logger logger = LoggerFactory.getLogger(AdminController.class);	
 
 	@Autowired
 	private AdminService as ;
 	
+	@Autowired
+	RestTemplate rest;	
+	
+	
+	
+	//authentication of admin
 	@GetMapping("authAdmin/{id}/{pass}")
 	public String authAdminController(@PathVariable("id") long id, @PathVariable("pass") String pass){
-		
+		logger.info("admin authentication controller");
 		if( as.authAdmin(id, pass) != null)
 			return "Login Successful";
 		else
@@ -38,50 +51,69 @@ public class AdminController {
 	}
 	
 
+	//create admin
 	@PostMapping("createAdmin")
-	public Admin createAdminController(@Valid @RequestBody Admin s) {
-		return as.createAdminService(s);
+	public Admin createAdminController(@Valid @RequestBody Admin admin) {
+		logger.info("admin controller createadmin");
+		return as.createAdminService(admin);
 	}
 	
+	//view admin data by id
 	@GetMapping("viewAdminById/{id}")
 	public Admin viewAdminByIdController(@PathVariable("id") long id){
+		logger.info("admin controller viewbyid");
 		Admin a = as.viewAdminByIdService(id);
-		Admin a1 = new Admin();
-		a1.setAdminId(a.getAdminId());
-		a1.setEmailId(a.getEmailId());
-		a1.setName(a.getName());
-		a1.setPassword(a.getPassword());
-		return a1;
+		return a;
 	}
 	
+	//update admin data by id
 	@PutMapping("updateAdmin/{id}")
 	public Admin updateAdminController(@RequestBody Admin s, @PathVariable("id") long id) throws ResourceNotFoundException {
+		logger.info("updateAdmin admin controller");
 		return as.updateAdminService(s, id);
 	}
 	
+	//delete by id
 	@DeleteMapping("deleteAdminById/{id}")
 	public String deleteAdminByIdController(@PathVariable("id") long id) throws ResourceNotFoundException{
+		logger.info("adminController delete by id");
 		if(as.deleteAdminByIdService(id))
 			return "Record deleted Successfully";
 		else
 			return "Can not delete record";
 	}
 	
+	//get all admin
 	@GetMapping("listAllAdmin")
 	public List<Admin> listAllAdminController(){
-		List<Admin> lst = new ArrayList<Admin>();
-		
-		for(Admin a : as.listAllAdminService()) {
-			Admin a1 = new Admin();
-			a1.setAdminId(a.getAdminId());
-			a1.setEmailId(a.getEmailId());
-			a1.setName(a.getName());
-			a1.setPassword(a.getPassword());
-			lst.add(a1);
-		}
-		
-		return lst;
+		logger.info("listAllAdmin AdminController");
+		return as.listAllAdminService();
 	}
 	
+	
+	//get all survey using resttemplate
+		@GetMapping(value = "/viewallsurveys")
+		public ResponseEntity<String> viewAllSurvey() {
+			logger.info("get all surveys from admin controller");
+			String survey = rest.getForObject("http://localhost/survey/survey/AllSurvey", String.class);
+			return ResponseEntity.ok(survey);
+		}
 
+		//get all surveyor using resttemplate
+				@GetMapping(value = "/viewallsurveyors")
+				public ResponseEntity<String> viewAllSurveyor() {
+					logger.info("get all surveys from admin controller");
+					String surveyor = rest.getForObject("http://localhost/surveyor/surveyor/AllSurveyor", String.class);
+					return ResponseEntity.ok(surveyor);
+				}
+
+				//get all survey using resttemplate
+				@GetMapping(value = "/viewallrespondent")
+				public ResponseEntity<String> viewAllRespondent() {
+					logger.info("get all Respondent from admin controller");
+					String Respondent = rest.getForObject("http://localhost/respondent/respondentms/listAllRespondent", String.class);
+					return ResponseEntity.ok(Respondent);
+				}
+
+	
 }
