@@ -44,6 +44,18 @@ public class SurveyorServiceTest {
 	void tearDown() throws Exception {
 	}
 
+	
+	private Surveyor getSurveyor() {
+		Surveyor a = new Surveyor();
+		
+		a.setSurveyorId(101);
+		a.setEmailId("shah@gmail.com");
+		a.setName("shah");
+		a.setPassword("shah");
+		
+		return a;
+	}
+	
 	@Test
 	void testCreateSurveyorController() throws Exception {
 		Surveyor surveyor = getSurveyor();
@@ -104,17 +116,7 @@ public class SurveyorServiceTest {
 	    assertThat(a).isEqualTo(result);
 	}
 	
-	
-	private Surveyor getSurveyor() {
-		Surveyor a = new Surveyor();
-		
-		a.setSurveyorId(101);
-		a.setEmailId("shah@gmail.com");
-		a.setName("shah");
-		a.setPassword("shah");
-		
-		return a;
-	}
+
 
 
 	

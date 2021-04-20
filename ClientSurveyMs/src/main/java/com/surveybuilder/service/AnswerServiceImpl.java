@@ -22,7 +22,16 @@ public class AnswerServiceImpl implements AnswerService{
 	@Autowired
 	answerDao ad;
 	
-	//createAnswerService
+	
+	/****************************************************************************************************************************
+	 - Method Name      : createAnswerService
+	 - Input Parameters :Answer s
+	 - Return type      : Answer
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : create the Answer information entered by respondent and store into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public Answer createAnswerService(Answer s) {
 
@@ -30,7 +39,15 @@ public class AnswerServiceImpl implements AnswerService{
 		return ad.save(s);
 	}
 
-	//viewAnswerByIdService
+	/****************************************************************************************************************************
+	 - Method Name      : viewAnswerByIdService
+	 - Input Parameters :long id
+	 - Return type      : Answer
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : view all the answers stored in the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public Answer viewAnswerByIdService(long id) {
 
@@ -38,7 +55,15 @@ public class AnswerServiceImpl implements AnswerService{
 		return ad.findAnswerById(id);
 	}
 
-	//updateAnswerService
+	/****************************************************************************************************************************
+	 - Method Name      : updateAnswerService
+	 - Input Parameters :Answer s, long id
+	 - Return type      : Answer
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : update the answer information entered by respondent and store into  the database.
+	  ****************************************************************************************************************************/ 
+
 	@Override
 	public Answer updateAnswerService(Answer s, long id) throws ResourceNotFoundException {
 	
@@ -51,7 +76,15 @@ public class AnswerServiceImpl implements AnswerService{
 		return updatedA;
 	}
 
-	//deleteAnswerByIdService
+	/****************************************************************************************************************************
+	 - Method Name      : deleteAnswerByIdService
+	 - Input Parameters : long id
+	 - Return type      : boolean
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : delete the answer information entered by respondent from the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public boolean deleteAnswerByIdService(long id) throws ResourceNotFoundException {
 		logger.info("deleteAnswerByIdService");
@@ -66,7 +99,15 @@ public class AnswerServiceImpl implements AnswerService{
 	}
 	
 
-	//listAllAnswerService
+	/****************************************************************************************************************************
+	 - Method Name      : listAllAnswerService
+	 - Input Parameters :
+	 - Return type      : List<Answer>
+	 - Author           : Capgemini
+	 - Creation Date    : 21-04-2021
+	 - Description      : view all the answers from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public List<Answer> listAllAnswerService() {
 

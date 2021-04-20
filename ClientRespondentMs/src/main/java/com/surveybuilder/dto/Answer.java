@@ -1,7 +1,8 @@
 package com.surveybuilder.dto;
 
+import java.io.Serializable;
 
-public class Answer {
+public class Answer implements Serializable{
 
 	private long aid;
 	String ans;

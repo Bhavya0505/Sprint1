@@ -17,10 +17,12 @@ import com.surveybuilder.entity.Survey;
 import com.surveybuilder.exception.ResourceNotFoundException;
 import com.surveybuilder.service.SurveyService;
 
+import io.swagger.annotations.Api;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@Api(description =  "Rest API of Survey Controller.. here we can create,update,delete and search survey.")
 @RestController
 @RequestMapping("/survey")
 public class SurveyController {
@@ -31,36 +33,76 @@ public class SurveyController {
 	@Autowired
 	SurveyService ss;
 
-	//getAllSurveyController
+	/****************************************************************************************************************************
+	 - Method Name      : getAllSurveyController
+	 - Input Parameters : 
+	 - Return type      : List<Survey>
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : Retrive all the surveys present into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@GetMapping("/AllSurvey")
 	public List<Survey> getAllSurveyController(){
 		logger.info("getAllSurveyController");
 		return ss.listAllSurveyService();
 	}
 	
-	//createSurveyController
+
+	/****************************************************************************************************************************
+	 - Method Name      : createSurvey
+	 - Input Parameters : Survey s
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : Inserting the survey information entered by surveyor   into  the database.
+	  ****************************************************************************************************************************/ 
+
 	@PostMapping("/createSurvey")
 	public Survey createSurveyController(@RequestBody Survey survey) {
 		logger.info("createSurveyController");
 		return ss.createSurveyService(survey);	
 	}
 	
-	//viewSurveyByIdController
+	/****************************************************************************************************************************
+	 - Method Name      : viewSurveyByIdController
+	 - Input Parameters : long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : view Survey By Id Service entered by surveyor from the database.
+	  ****************************************************************************************************************************/ 
+	
 	@GetMapping("viewSurveyById/{id}")
 	public Survey viewSurveyByIdController(@PathVariable("id") Long id){
 		logger.info("viewSurveyByIdController");
 	return ss.viewSurveyByIdService(id);
 	}
 	
-	//updateSurvey Controller
+	/****************************************************************************************************************************
+	 - Method Name      : updateSurveyController
+	 - Input Parameters : Survey s, long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : deleting the survey information entered by surveyor   from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@PutMapping("updateSurvey/{id}")
 	public Survey updateSurveyController(@RequestBody Survey survey,@PathVariable("id") Long id) throws ResourceNotFoundException {
 		logger.info("updateSurveyController");
 		return ss.updateSurveyService(survey,id);
 	}
 	
-
-	//deleteSurveyByIdController
+	/****************************************************************************************************************************
+	 - Method Name      : deleteSurveyByIdController
+	 - Input Parameters : long id
+	 - Return type      : String
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : deleting the survey information entered by surveyor   from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@DeleteMapping("deleteSurveyById/{id}")
 	public String deleteSurveyByIdController(@PathVariable("id") Long id) throws ResourceNotFoundException{
 		logger.info("deleteSurveyByIdController");
@@ -70,20 +112,46 @@ public class SurveyController {
 			return "Can not delete record";
 	}
 	
-	//in case we have to update the survey first we need to stop the distribution of survey
-	//it changes status from active to passive 
+	/****************************************************************************************************************************
+	 - Method Name      : stopSurveyController
+	 - Input Parameters : long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : stop distributing the survey present into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@PutMapping("stopSurvey/{id}")
 	public Survey stopSurveyController(@PathVariable("id") Long id) throws ResourceNotFoundException {
 		logger.info("stopDistribution of survey");
 		return ss.stopSurvey(id);
 	}
 	
-	//to change the status of survey from passive to active
+
+	/****************************************************************************************************************************
+	 - Method Name      : startSurveyController
+	 - Input Parameters : long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : distribute the surveys present into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@PutMapping("startSurvey/{id}")
 	public Survey startSurveyController(@PathVariable("id") Long id) throws ResourceNotFoundException {
 		logger.info("start distribution of survey");
 		return ss.distributeSurvey(id);
 	}
+	
+
+	/****************************************************************************************************************************
+	 - Method Name      : viewOnlyAllSurveyController
+	 - Input Parameters : 
+	 - Return type      : List<Survey>
+	 - Author           : capgemini
+	 - Creation Date    : 19-04-2021
+	 - Description      : Retrive only sid,title and status of all the surveys from the database.
+	  ****************************************************************************************************************************/ 
 	
 	@GetMapping("viewallsurveystatus")
 	public List<Survey> viewOnlyAllSurveyController(){

@@ -1,6 +1,8 @@
 package com.surveybuilder.dto;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable{
 
 	private long Qid;
 

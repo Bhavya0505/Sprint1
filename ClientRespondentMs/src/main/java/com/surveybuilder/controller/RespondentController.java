@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.surveybuilder.dto.Answer;
 import com.surveybuilder.entity.Respondent;
 import com.surveybuilder.exception.ResourceNotFoundException;
 import com.surveybuilder.service.RespondentService;
 
+import io.swagger.annotations.Api;
+
+
+@Api(description =  "Rest API for Respondent Controller")
 @RestController
 @RequestMapping("/respondentms")
 public class RespondentController {
@@ -99,4 +104,9 @@ public class RespondentController {
 		String survey = rest.getForObject("http://localhost/survey/survey/viewallsurveystatus", String.class);
 		return ResponseEntity.ok(survey);
 	}
+	
+	@PostMapping(value = "/createAnswer")
+	public String addAnswer(@RequestBody Answer answer) {
+		return rs.createAnswerService(answer);
+			}
 }

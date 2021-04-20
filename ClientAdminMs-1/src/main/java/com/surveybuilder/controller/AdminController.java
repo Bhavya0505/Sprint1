@@ -23,6 +23,9 @@ import com.surveybuilder.entity.*;
 import com.surveybuilder.exception.ResourceNotFoundException;
 import com.surveybuilder.service.AdminService;
 
+import io.swagger.annotations.Api;
+
+@Api(description =  "Rest API of Admin Controller")
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -50,9 +53,9 @@ public class AdminController {
 
 	//create admin
 	@PostMapping("createAdmin")
-	public Admin createAdminController(@Valid @RequestBody Admin s) {
+	public Admin createAdminController(@Valid @RequestBody Admin admin) {
 		logger.info("admin controller createadmin");
-		return as.createAdminService(s);
+		return as.createAdminService(admin);
 	}
 	
 	//view admin data by id
@@ -108,10 +111,9 @@ public class AdminController {
 				@GetMapping(value = "/viewallrespondent")
 				public ResponseEntity<String> viewAllRespondent() {
 					logger.info("get all Respondent from admin controller");
-					String Respondent = rest.getForObject("http://localhost/respondent/respondent/viewallanswer", String.class);
+					String Respondent = rest.getForObject("http://localhost/respondent/respondentms/listAllRespondent", String.class);
 					return ResponseEntity.ok(Respondent);
 				}
 
-		
-
+	
 }

@@ -49,8 +49,7 @@ public class AdminServiceImpl implements AdminService{
 	public Admin updateAdminService(Admin s, long id) throws ResourceNotFoundException {
 		logger.info("update admin service");
 		Admin a = sr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin not found for this id :: " + id));
-		//Admin a = sr.findAdminById(id);
-		
+				
 		s.setAdminId(a.getAdminId());
 		
 		final Admin updatedA= sr.save(s);
@@ -64,7 +63,6 @@ public class AdminServiceImpl implements AdminService{
 		logger.info("deleteAdminByIdService");
 		Admin a = sr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin not found for this id :: " + id));
 		
-		//Admin a = sr.findAdminById(id);
 		
 		sr.deleteById(id);
 		

@@ -17,10 +17,12 @@ import com.surveybuilder.entity.Question;
 import com.surveybuilder.exception.ResourceNotFoundException;
 import com.surveybuilder.service.QuestionService;
 
+import io.swagger.annotations.Api;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
+@Api(description =  "Rest API of Question Controller.. here we can create,update,delete and search question.")
 @RestController
 @RequestMapping("/question")
 public class QuestionController {
@@ -32,21 +34,48 @@ public class QuestionController {
 	@Autowired
 	QuestionService ss;
 	
-	//get all questions
-	@GetMapping("/findall")
+
+	/****************************************************************************************************************************
+	 - Method Name      : listAllQuestionController
+	 - Input Parameters :
+	 - Return type      : List<Question>
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : view all the Question from  the database.
+	  ****************************************************************************************************************************/ 
+	
+	@GetMapping("/viewAllQuestion")
 public List<Question> getAllQuestionController(){
 		logger.info("getAllQuestionController");
 		return ss.listAllQuestionService();
 	}
 	
-	//createQuestionController
+
+	/****************************************************************************************************************************
+	 - Method Name      : createQuestionController
+	 - Input Parameters :Question s
+	 - Return type      : Question
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : create the question and store it into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@PostMapping("/createQuestion")
 	public Question createQuestionController(@RequestBody Question q) {
 		logger.info("createQuestionController");
 		return ss.createQuestionService(q);	
 	}
 
-	//viewQuestionByIdController
+
+	/****************************************************************************************************************************
+	 - Method Name      : viewQuestionByIdController
+	 - Input Parameters :long id
+	 - Return type      : Question
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : view question by id from the  the database.
+	  ****************************************************************************************************************************/ 
+
 	@GetMapping("viewQuestionById/{id}")
 	public Question viewQuestionByIdController(@PathVariable("id") Long id){
 		logger.info("viewQuestionByIdController");
@@ -55,14 +84,30 @@ public List<Question> getAllQuestionController(){
 		return q;
 	}
 	
-	//updateQuestionController
+	/****************************************************************************************************************************
+	 - Method Name      : updateQuestionController
+	 - Input Parameters :Question s, long id
+	 - Return type      : Question
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : update the Question and store into  the database.
+	  ****************************************************************************************************************************/ 
+
 	@PutMapping("updateQuestion/{id}")
 	public Question updateQuestionController(@RequestBody Question s, @PathVariable("id") long id) throws ResourceNotFoundException {
 		logger.info("updateQuestionController");
 		return ss.updateQuestionService(s, id);
 	}
 	
-	//deleteQuestionByIdController
+	/****************************************************************************************************************************
+	 - Method Name      : deleteQuestionByIdController
+	 - Input Parameters :boolean
+	 - Return type      : long id
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : delete the Question from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@DeleteMapping("deleteQuestionById/{id}")
 	public String deleteQuestionByIdController(@PathVariable("id") Long id) throws ResourceNotFoundException{
 		logger.info("deleteQuestionByIdController");
@@ -72,7 +117,15 @@ public List<Question> getAllQuestionController(){
 			return "Can not delete record";
 	}
 
-	//getQuestionBySurveyId
+	/****************************************************************************************************************************
+	 - Method Name      : getQuestionBySurveyId
+	 - Input Parameters :long id
+	 - Return type      : List<Question>
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : view survey by id from the  the database.
+	  ****************************************************************************************************************************/ 
+
 	@GetMapping("getQuestionBySurveyId/{id}")
 	public List<Question> getQuestionBySurveyId(@PathVariable("id") Long id){
 

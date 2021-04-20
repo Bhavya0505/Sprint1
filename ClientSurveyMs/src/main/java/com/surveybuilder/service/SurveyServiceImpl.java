@@ -21,7 +21,17 @@ public class SurveyServiceImpl implements SurveyService{
 	@Autowired
 	private surveyDao rr;
 
-	//createSurveyService
+
+	
+	/****************************************************************************************************************************
+	 - Method Name      : createSurvey
+	 - Input Parameters : Survey s
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : Inserting the survey information entered by surveyor   into  the database.
+	  ****************************************************************************************************************************/ 
+
 	@Override
 	public Survey createSurveyService(Survey s) {
 		logger.info("createSurveyService");
@@ -34,7 +44,14 @@ public class SurveyServiceImpl implements SurveyService{
 		return a ;
 	}
 
-	//viewSurveyByIdService
+	/****************************************************************************************************************************
+	 - Method Name      : viewSurveyByIdService
+	 - Input Parameters : long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : view Survey By Id Service entered by surveyor from the database.
+	  ****************************************************************************************************************************/ 
 	@Override
 	public Survey viewSurveyByIdService(long id) {
 		logger.info("viewSurveyByIdService");
@@ -46,7 +63,46 @@ public class SurveyServiceImpl implements SurveyService{
 		return a;
 	}
 
-	//deleteSurveyByIdService
+	
+	/****************************************************************************************************************************
+	 - Method Name      : updateSurveyService
+	 - Input Parameters : Survey s, long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : deleting the survey information entered by surveyor   from  the database.
+	  ****************************************************************************************************************************/ 
+	@Override
+	public Survey updateSurveyService(Survey s, long id) throws ResourceNotFoundException {
+	
+		logger.info("updateSurveyService");
+		Survey a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
+
+		String str = "Active";
+		Survey sur = new Survey();
+		sur = a;
+		String str1 =  sur.getStatus();
+		if(str.equals(str1)) {
+			throw new ResourceNotFoundException("Stop distribution of survey before updating it :: "+ id);
+		}
+	
+		s.setSid(a.getSid());
+	
+		final Survey updatedA= rr.save(s);
+		
+		return updatedA;
+	}
+
+	
+	
+	/****************************************************************************************************************************
+	 - Method Name      : deleteSurveyByIdService
+	 - Input Parameters : long id
+	 - Return type      : String
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : deleting the survey information entered by surveyor   from  the database.
+	  ****************************************************************************************************************************/ 
 	@Override
 	public boolean deleteSurveyByIdService(long id) throws ResourceNotFoundException {
 
@@ -61,32 +117,34 @@ public class SurveyServiceImpl implements SurveyService{
 			return true;
 	}
 
-	//get list of All Survey Service
+	/****************************************************************************************************************************
+	 - Method Name      : listAllSurveyService
+	 - Input Parameters : 
+	 - Return type      : List<Survey>
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : display all the surveys present into  the database.
+	  ****************************************************************************************************************************/ 
 	@Override
 	public List<Survey> listAllSurveyService() {
 		logger.info("listAllSurveyService");
 		return rr.findAll();
 	}
 
-	//updateSurveyService
-	@Override
-	public Survey updateSurveyService(Survey s, long id) throws ResourceNotFoundException {
-	
-		logger.info("updateSurveyService");
-		Survey a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
-		
-		s.setSid(a.getSid());
-		
-		final Survey updatedA= rr.save(s);
-		return updatedA;
-	}
 
-	//distribute Survey.. passive to active
+	/****************************************************************************************************************************
+	 - Method Name      : distributeSurvey
+	 - Input Parameters : long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : distribute the surveys present into  the database.
+	  ****************************************************************************************************************************/ 
 	@Override
 	public Survey distributeSurvey(long id) throws ResourceNotFoundException {
 		logger.info("distributeSurveyService");
 		Survey s = new Survey();
-			Survey a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
+			Survey a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found for this id :: " + id));
 				s = a;
 				s.setSid(a.getSid());
 				s.setStatus("Active");
@@ -96,12 +154,20 @@ public class SurveyServiceImpl implements SurveyService{
 				return updatedA;
 	}
 	
-	//active to passive
+
+	/****************************************************************************************************************************
+	 - Method Name      : stopSurvey
+	 - Input Parameters : long id
+	 - Return type      : Survey
+	 - Author           : Bhavya Shah
+	 - Creation Date    : 19-04-2021
+	 - Description      : stop distributing the survey present into  the database.
+	  ****************************************************************************************************************************/ 
 	@Override
 	public Survey stopSurvey(long id) throws ResourceNotFoundException {
 		logger.info("stopDistributeSurvey");
 		Survey s = new Survey();
-		Survey a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Surveyor not found for this id :: " + id));
+		Survey a = rr.findById(id).orElseThrow(() -> new ResourceNotFoundException("Survey not found for this id :: " + id));
 		s=a;
 		s.setSid(a.getSid());
 		s.setStatus("Passive");
@@ -110,7 +176,4 @@ public class SurveyServiceImpl implements SurveyService{
 		return updatedA;
 	}
 	
-
-
-
 }

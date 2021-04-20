@@ -23,7 +23,15 @@ public class QuestionServiceImpl implements QuestionService{
 	@Autowired
 	questionDao qd;
 	
-	//createQuestionService
+	/****************************************************************************************************************************
+	 - Method Name      : createQuestionService
+	 - Input Parameters :Question s
+	 - Return type      : Question
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : create the question and store it into  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public Question createQuestionService(Question s) {
 
@@ -31,7 +39,15 @@ public class QuestionServiceImpl implements QuestionService{
 		return qd.save(s);
 	}
 
-	//viewQuestionByIdService
+	/****************************************************************************************************************************
+	 - Method Name      : viewQuestionByIdService
+	 - Input Parameters :long id
+	 - Return type      : Question
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : view question by id from the  the database.
+	  ****************************************************************************************************************************/ 
+
 	@Override
 	public Question viewQuestionByIdService(long id) {
 
@@ -40,7 +56,15 @@ public class QuestionServiceImpl implements QuestionService{
 		return que.get();
 	}
 
-	//updateQuestionService
+	/****************************************************************************************************************************
+	 - Method Name      : updateQuestionService
+	 - Input Parameters :Question s, long id
+	 - Return type      : Question
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : update the Question and store into  the database.
+	  ****************************************************************************************************************************/ 
+
 	@Override
 	public Question updateQuestionService(Question s, long id) throws ResourceNotFoundException {
 
@@ -54,7 +78,15 @@ public class QuestionServiceImpl implements QuestionService{
 
 	}
 
-	//deleteQuestionByIdService
+	/****************************************************************************************************************************
+	 - Method Name      : deleteQuestionByIdService
+	 - Input Parameters :boolean
+	 - Return type      : long id
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : delete the Question from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public boolean deleteQuestionByIdService(long id) throws ResourceNotFoundException {
 		logger.info("deleteQuestionByIdService");
@@ -68,8 +100,15 @@ public class QuestionServiceImpl implements QuestionService{
 			return true;
 	}
 	
-
-	//get list of AllQuestionService
+	/****************************************************************************************************************************
+	 - Method Name      : listAllQuestionService
+	 - Input Parameters :
+	 - Return type      : List<Question>
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : view all the Question from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public List<Question> listAllQuestionService() {
 
@@ -77,7 +116,16 @@ public class QuestionServiceImpl implements QuestionService{
 		return qd.findAll();
 	}
 
-	//getQuestionBySurveyIdService
+
+	/****************************************************************************************************************************
+	 - Method Name      : getQuestionBySurveyIdService
+	 - Input Parameters :long id
+	 - Return type      : List<Question>
+	 - Author           : Capgemini
+	 - Creation Date    : 20-04-2021
+	 - Description      : get Question By SurveyId from  the database.
+	  ****************************************************************************************************************************/ 
+	
 	@Override
 	public List<Question> getQuestionBySurveyIdService(long id) {
 

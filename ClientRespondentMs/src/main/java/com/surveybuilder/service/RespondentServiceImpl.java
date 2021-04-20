@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 import com.surveybuilder.dao.RespondentDao;
+import com.surveybuilder.dto.Answer;
 import com.surveybuilder.entity.Respondent;
 import com.surveybuilder.exception.ResourceNotFoundException;
 
@@ -88,6 +89,20 @@ public class RespondentServiceImpl implements RespondentService{
 		logger.info("authentication of respondent");
 		return rr.authRespondent(emailId, pass);
 	}
+
+	@Autowired
+	RestTemplate rest;
 	
+	@Override
+	public String createAnswerService(Answer ans) {
+
+		String url = "http://localhost/survey/answer/createAnswer";
+
+			String a = rest.postForObject(url, ans, String.class);
+			//rest.postForObject(url, object, class)
+			
+			return a;
+			
+		}
 	
-}
+	}
